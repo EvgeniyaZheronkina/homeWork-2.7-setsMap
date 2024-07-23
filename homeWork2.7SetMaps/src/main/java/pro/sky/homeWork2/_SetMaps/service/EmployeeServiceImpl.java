@@ -11,7 +11,6 @@ import java.util.*;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final Map <String, Employee> employees;
-    private static final int STORAGE_SIZE = 5;
 
     public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
