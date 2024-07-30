@@ -1,9 +1,11 @@
 package pro.sky.homeWork2._SetMaps.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.homeWork2._SetMaps.Employee;
 import pro.sky.homeWork2._SetMaps.exception.EmployeeAlreadyAddedException;
 import pro.sky.homeWork2._SetMaps.exception.EmployeeNotFoundException;
+import pro.sky.homeWork2._SetMaps.exception.InvalidDataException;
 
 import java.util.*;
 
@@ -19,6 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee add (String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
+        employee.setFirstName(StringUtils.capitalize(employee.getFirstName().toLowerCase()));
+        employee.setLastName(StringUtils.capitalize(employee.getLastName().toLowerCase()));
+        if (!StringUtils.isAlpha(employee.getFirstName()) || !StringUtils.isAlpha(employee.getLastName())) {
+            throw new InvalidDataException();
+        }
+
         if (employees.containsKey(employee.getFullName())){
             throw new EmployeeAlreadyAddedException("Сотрудник уже есть в коллекции");
         }
